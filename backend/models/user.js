@@ -11,8 +11,9 @@ const userSchema = new mongoose.Schema({
     required: true
   }
 });
-console.log(2)
+console.log('1')
 const User = mongoose.model('User', userSchema);
-
+console.log('2')
 module.exports = User;
 
+console.log('3')
