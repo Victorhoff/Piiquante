@@ -1,7 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const helmet = require('helmet')
 
 const userRoutes = require('./routes/user');
 
@@ -13,8 +11,8 @@ mongoose.connect('mongodb+srv://victorhoff:connect@cluster0.lf6hvo6.mongodb.net/
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(helmet)
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -24,8 +22,6 @@ app.use((req, res, next) => {
   });
 
 app.use('/api/auth', userRoutes);
-
-app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 
 module.exports = app;
 
