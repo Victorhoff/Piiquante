@@ -9,12 +9,12 @@ exports.signup = (req, res, next) => {
       const user = new User({
         email: req.body.email,
         password: hash 
-      }); console.log(user)
+      }); (user)
       user.save()
         .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
         .catch(error => res.status(400).json({ error }));
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(503).json({ error }));
 };
 
 exports.login = (req, res, next) => {
@@ -38,10 +38,10 @@ exports.login = (req, res, next) => {
                     })
                 }
             })
-            .catch(error => res.status(500).json({ error }))
+            .catch(error => res.status(501).json({ error }))
         }
     })
     .catch(error => {
-        res.status(500).json({ error })
+        res.status(502).json({ error })
     });
 };
