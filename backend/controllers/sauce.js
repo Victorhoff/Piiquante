@@ -1,18 +1,21 @@
 const modelSauce = require('../models/Sauce');
-const fs = require('fs');
+const fs = require('fs'); // Module de gestion de fichiers
 
+// Affichage de l'ensemble des sauces
 exports.getAllSauces = (req, res, next) => {
   modelSauce.find()
       .then(response => res.status(200).json(response))
       .catch(error => res.status(400).json({error}))
 };
 
+// Affichage d'une seule sauce sélectionnée 
 exports.getOneSauce = (req, res, next) => {
   modelSauce.findOne({_id: req.params.id})
       .then(sauce => res.status(200).json(sauce))
       .catch(error => res.status(400).json({error}))
 };
 
+// Création d'une sauce
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
   delete sauceObject._id;
@@ -27,6 +30,7 @@ exports.createSauce = (req, res, next) => {
       });console.log(sauce)
 };
 
+// Modification d'une sauce par son créateur
 exports.modifySauce = (req, res, next) => {
   if (req.file) {
       modelSauce.findOne({ _id: req.params.id })
@@ -51,6 +55,7 @@ exports.modifySauce = (req, res, next) => {
   }
 };
 
+// Suppression d'une sauce par son créateur
 exports.deleteSauce = (req, res, next) => {
   modelSauce.findOne({_id: req.params.id})
     .then(sauce => {
@@ -64,6 +69,7 @@ exports.deleteSauce = (req, res, next) => {
 })
 };
 
+// Like, dislike d'une sauce par n'importe quel utilisateur
 exports.likeSauce = function (req, res, next) {
   modelSauce.findOne({ _id: req.params.id })
     .then(function (likedSauce) {
