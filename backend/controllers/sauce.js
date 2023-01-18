@@ -57,16 +57,16 @@ exports.modifySauce = (req, res, next) => {
 
 // Suppression d'une sauce par son créateur
 exports.deleteSauce = (req, res, next) => {
-  modelSauce.findOne({_id: req.params.id})
+  modelSauce.findOne({ _id: req.params.id })
     .then(sauce => {
       const filename = sauce.imageUrl.split('/images/')[1];
-
-    fs.unlink(`images/${filename}`, () => {
-  modelSauce.deleteOne({_id: req.params.id})
-    .then(()=> res.status(200).json({ message: 'Sauce supprimée'}))
-    .catch(error => res.status(400).json({ error}))
-  });
-})
+      fs.unlink(`images/${filename}`, () => {
+        modelSauce.deleteOne({ _id: req.params.id })
+          .then(() => res.status(200).json({ message: 'Sauce supprimée !'}))
+          .catch(error => res.status(400).json({ error }));
+      });
+    })
+    .catch(error => res.status(500).json({ error }));
 };
 
 // Like, dislike d'une sauce par n'importe quel utilisateur
